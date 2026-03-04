@@ -1,0 +1,15 @@
+#!/bin/bash
+set -ouex pipefail
+
+# Add Repositories
+dnf5 -y copr enable @asahi/steam
+dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release{,-extras,-mesa}
+
+# Initial update
+dnf5 -y update
+
+# FEX
+dnf5 -y install fex-emu
+
+# Steam
+dnf5 -y install steam
