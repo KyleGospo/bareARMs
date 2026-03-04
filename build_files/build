@@ -1,0 +1,5 @@
+#!/bin/bash
+set -ouex pipefail
+
+# Initial update
+dnf update -y
