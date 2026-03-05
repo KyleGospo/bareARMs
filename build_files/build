@@ -1,15 +1,54 @@
 #!/bin/bash
 set -ouex pipefail
 
+# Dependencies
+apt update -y
+apt install -y \
+  wget \
+  gpg
+
 # Add Repositories
-dnf5 -y copr enable @asahi/steam
-dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release{,-extras,-mesa}
+wget https://ryanfortner.github.io/box86-debs/box86.list -O /etc/apt/sources.list.d/box86.list
+wget -qO- https://ryanfortner.github.io/box86-debs/KEY.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/box86-debs-archive-keyring.gpg
+wget https://ryanfortner.github.io/box64-debs/box64.list -O /etc/apt/sources.list.d/box64.list
+wget -qO- https://ryanfortner.github.io/box64-debs/KEY.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/box64-debs-archive-keyring.gpg
 
 # Initial update
-dnf5 -y update
+apt upgrade -y
 
-# FEX
-dnf5 -y install fex-emu
+# Box64
+dpkg --add-architecture armhf
+apt install -y \
+  box64
 
 # Steam
-dnf5 -y install steam
+apt install -y \
+  libc6:armhf \
+  libsdl2-2.0-0:armhf \
+  libsdl2-image-2.0-0:armhf \
+  libsdl2-mixer-2.0-0:armhf \
+  libsdl2-ttf-2.0-0:armhf \
+  libopenal1:armhf \
+  libpng16-16:armhf \
+  libfontconfig1:armhf \
+  libxcomposite1:armhf \
+  libbz2-1.0:armhf \
+  libxtst6:armhf \
+  libsm6:armhf \
+  libice6:armhf \
+  libgl1:armhf \
+  libxinerama1:armhf \
+  libxdamage1:armhf \
+  libibus-1.0-5 \
+  libncurses5:armhf \
+  libgl1-mesa-dri \
+  libgl1-mesa-dri:armhf \
+  libglu1-mesa \
+  libglu1-mesa:armhf \
+  libvulkan1 \
+  libvulkan1:armhf \
+  libcurl4 \
+  libcurl4:armhf
+
+wget https://cdn.cloudflare.steamstatic.com/client/installer/steam.deb -O /tmp/steam.deb
+apt install /tmp/steam.deb -y
