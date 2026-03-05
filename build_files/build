@@ -1,15 +1,26 @@
 #!/bin/bash
 set -ouex pipefail
 
+# Dependencies
+apt update -y
+apt install -y \
+  wget \
+  gpg
+
 # Add Repositories
-dnf5 -y copr enable @asahi/steam
-dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release{,-extras,-mesa}
+wget https://ryanfortner.github.io/box86-debs/box86.list -O /etc/apt/sources.list.d/box86.list
+wget -qO- https://ryanfortner.github.io/box86-debs/KEY.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/box86-debs-archive-keyring.gpg
+wget https://ryanfortner.github.io/box64-debs/box64.list -O /etc/apt/sources.list.d/box64.list
+wget -qO- https://ryanfortner.github.io/box64-debs/KEY.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/box64-debs-archive-keyring.gpg
 
 # Initial update
-dnf5 -y update
+apt upgrade -y
 
-# FEX
-dnf5 -y install fex-emu
+# Box64
+dpkg --add-architecture armhf
+apt install -y \
+  box64
 
 # Steam
-dnf5 -y install steam
+wget https://cdn.cloudflare.steamstatic.com/client/installer/steam.deb -O /tmp/steam.deb
+apt install /tmp/steam.deb -y
