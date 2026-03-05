@@ -22,33 +22,5 @@ apt install -y \
   box64
 
 # Steam
-apt install -y \
-  libc6:armhf \
-  libsdl2-2.0-0:armhf \
-  libsdl2-image-2.0-0:armhf \
-  libsdl2-mixer-2.0-0:armhf \
-  libsdl2-ttf-2.0-0:armhf \
-  libopenal1:armhf \
-  libpng16-16:armhf \
-  libfontconfig1:armhf \
-  libxcomposite1:armhf \
-  libbz2-1.0:armhf \
-  libxtst6:armhf \
-  libsm6:armhf \
-  libice6:armhf \
-  libgl1:armhf \
-  libxinerama1:armhf \
-  libxdamage1:armhf \
-  libibus-1.0-5 \
-  libncurses5:armhf \
-  libgl1-mesa-dri \
-  libgl1-mesa-dri:armhf \
-  libglu1-mesa \
-  libglu1-mesa:armhf \
-  libvulkan1 \
-  libvulkan1:armhf \
-  libcurl4 \
-  libcurl4:armhf
-
 wget https://cdn.cloudflare.steamstatic.com/client/installer/steam.deb -O /tmp/steam.deb
 apt install /tmp/steam.deb -y
