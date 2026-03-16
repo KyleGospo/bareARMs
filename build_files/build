@@ -2,14 +2,26 @@
 set -ouex pipefail
 
 # Add Repositories
-dnf5 -y copr enable @asahi/steam
 dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release{,-extras,-mesa}
 
-# Initial update
+# Initial Update
 dnf5 -y update
 
-# FEX
-dnf5 -y install fex-emu
+# Install Box64
+dnf5 -y install box64
 
-# Steam
-dnf5 -y install steam
+# Install Steam
+dnf5 -y install \
+    --installroot=/var/lib/machines/x86_64 \
+    --forcearch=x86_64 \
+    --nogpgcheck \
+    --repofrompath='fedora-x86_64,metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-43&arch=x86_64' \
+    --repofrompath='fedora-updates-x86_64,metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f43&arch=x86_64' \
+    --disablerepo='*' \
+    --enablerepo='fedora-x86_64' \
+    --enablerepo='fedora-updates-x86_64' \
+    --setopt=install_weak_deps=False \
+    basesystem steam
+
+# Clean DNF Cache
+rm -rf /var/lib/machines/x86_64/var/cache/dnf
