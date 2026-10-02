@@ -4,7 +4,7 @@ COPY build_files /
 
 # Base Image
 # quay.io/fedora/fedora-toolbox:43-aarch64
-FROM quay.io/fedora/fedora-toolbox@sha256:f36fcda6b5923daeef8624873cba2762968caef01c3f280fc982308c4532634e AS builder
+FROM quay.io/fedora/fedora-toolbox@sha256:034cb7c472038e2d879ddc19568106a1342aa24403f0d641a0f73dda638707ad AS builder
 
 # Build container
 RUN --mount=type=cache,dst=/var/cache \
